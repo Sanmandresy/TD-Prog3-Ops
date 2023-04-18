@@ -1,10 +1,8 @@
-AWSTemplateFormatVersion: 2010-09-09
-
+AWSTemplateFormatVersion: "2010-09-09"
 Description: A template for Storage
 
 Resources:
-  STD21045S3Bucket:
+  MyS3Bucket:
     Type: 'AWS::S3::Bucket'
-    DeletionPolicy: Retain
     Properties:
-      BucketName: STD21045
+      BucketName: 'std21045'
