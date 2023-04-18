@@ -1,8 +1,16 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: A template for Storage
 
+Parameters:
+  S3BucketName:
+    Type : 'AWS::SSM::Parameter::Value<String>'
+    Default: '/std21045/s3/bucket-name'
+  S3BucketArn:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/std21045/s3/arn'
+
 Resources:
   MyS3Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: 'std21045'
+      BucketName: !Ref S3BucketName
