@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: A template for Database
+
+
+Parameters:
+  DBName:
+    Type: String
+    Default: DbPg45
+
+Resources:
+  RDSBase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName: !Ref DBName
+      DBInstanceClass: db.t3.micro
+      AllocatedStorage: 20
+      Engine: postgres
+      MasterUsername: !Sub '{{resolve:ssm:/std21045/rds/db/username}}'
+      MasterUserPassword: !Sub '{{resolve:ssm:/std21045/rds/db/password}}'
+  DatabaseSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Value:
+        Fn::Join:
+          - ''
+          - - jdbc:postgresql://
+            - Fn::GetAtt:
+                - RDSBase
+                - Endpoint.Address
+            - ':'
+            - Fn::GetAtt:
+                - RDSBase
+                - Endpoint.Port
+            - '/'
+            - !Ref DBName
+
+Outputs:
+  DatabaseSSM:
+    Value: !Ref DBName

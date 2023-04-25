@@ -1,9 +1,9 @@
-name: CD Storage
+name: CD Compute
 
 on:
   push:
     branches:
-      - 'database'
+      - 'dev'
 
   workflow_dispatch:
 
@@ -22,7 +22,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to cloudformation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: std21045db
-          template: cf-stacks/database-compute.yml
+        run: aws cloudformation deploy --template-file cf-stacks/storage-compute.yml --stack-name std21045
