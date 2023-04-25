@@ -5,12 +5,17 @@ Parameters:
   S3BucketName:
     Type : 'AWS::SSM::Parameter::Value<String>'
     Default: '/std21045/s3/bucket-name'
-  S3BucketArn:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/std21045/s3/arn'
 
 Resources:
   MyS3Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: !Ref S3BucketName
+  SSMParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Type: String
+      Name: s3_bucket_arn
+      Value: !GetAtt Bucket.Arn
+    DependsOn:
+      - MyS3Bucket

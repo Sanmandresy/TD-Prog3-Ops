@@ -22,4 +22,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to cloudformation
-        run: aws cloudformation deploy --template-file cf-stack.yml --stack-name std21045
+        run: aws cloudformation deploy --template-file cf-stack/storage-compute.yml --stack-name std21045
